@@ -1,0 +1,48 @@
+### model
+model_name_or_path: /home/wangmengxin/assignment_A/sft/outputs/qwen15_code_full_sft
+trust_remote_code: true
+
+### method
+stage: dpo
+do_train: true
+finetuning_type: lora
+pref_loss: simpo
+pref_beta: 0.05
+simpo_gamma: 0.3
+ref_model: /home/wangmengxin/assignment_A/sft/outputs/qwen15_code_full_sft
+
+### lora
+lora_rank: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target: q_proj,k_proj
+
+### dataset
+dataset_dir: ./dpo/data
+dataset: code_dpo_train
+template: qwen
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 2
+
+### output
+output_dir: ./dpo/outputs/qwen15_code_lora_simpo_v3
+logging_steps: 5
+save_steps: 200
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-6
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_steps: 0
+fp16: true
+bf16: false
+ddp_timeout: 180000000

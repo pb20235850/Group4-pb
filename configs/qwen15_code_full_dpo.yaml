@@ -1,0 +1,47 @@
+### model
+model_name_or_path: /home/wangmengxin/assignment_A/sft/outputs/qwen15_code_full_sft
+trust_remote_code: true
+
+### method
+stage: dpo
+do_train: true
+finetuning_type: full
+pref_beta: 0.1
+pref_loss: sigmoid
+ref_model: /home/wangmengxin/assignment_A/sft/outputs/qwen15_code_full_sft
+
+### dataset
+dataset_dir: ./dpo/data
+dataset: code_dpo_train
+template: qwen
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 2
+
+### output
+output_dir: ./dpo/outputs/qwen15_code_full_dpo
+logging_steps: 5
+save_steps: 200
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-6
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+max_grad_norm: 1.0
+gradient_checkpointing: true
+fp16: true
+bf16: false
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+eval_strategy: "no"
